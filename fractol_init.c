@@ -1,49 +1,67 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   fractol_init.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: weiyang <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/22 09:49:26 by weiyang           #+#    #+#             */
-/*   Updated: 2025/07/22 09:49:31 by weiyang          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "fractol.h"
+#include "minilibx-linux/mlx.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-void  data_init(t_fractol *fractol)
+/*
+ * If MALLOC goes bad (improbable)
+*/
+static void	malloc_error(void)
 {
-    fractol->escaped_value = 4;
-    fractol->iterations_definition = 42;
+	perror("Problems with malloc");
+	exit(EXIT_FAILURE);
 }
 
-static void    malloc_error()
+
+
+static void	data_init(t_fractal *fractal)
 {
-    perror("Problem avec malloc");
-    exit(EXIT_FAILURE);
+	fractal->escape_value = 4; // 2 ^ 2, my hypotenuse
+	fractal->iterations_defintion = 42; 
+	fractal->shift_x = 0.0;
+	fractal->shift_y = 0.0;
+	// zoom factor
+	fractal->zoom = 1.0;
 }
 
-void    fractol_init(t_fractol *fractol)
+
+
+
+/*
+ * INIT 
+ * ~mlx
+ * ~listening events
+ * ~hooks data
+*/
+void	fractal_init(t_fractal *fractal)
 {
-    fractol->mlx_connection = mlx_init();
-    if (!fractol->mlx_connection)
-        malloc_error();
-    fractol->mlx_window = mlx_new_window(fractol->mlx_connection, WIDTH, HEIGHT, fractol->name);
-    if (!fractol->mlx_window)
-    {
-        mlx_destroy_display(fractol->mlx_connection);
-        free(fractol->mlx_window);
-        malloc_error();
-    }
-    fractol->img.img_ptr = mlx_new_image(fractol->mlx_connection, WIDTH, HEIGHT);
-    if (!fractol->img.img_ptr)
-    {
-        mlx_destroy_window(fractol->mlx_connection, fractol->mlx_window);
-        mlx_destroy_display(fractol->mlx_connection);
-        free(fractol->mlx_window);
-        malloc_error();
-    }
-    fractol->img.pixels_ptr = mlx_get_data_addr(fractol->img.img_ptr, &fractol->img.bpp, &fractol->img.line_len, &fractol->img.endian);
-    data_init(fractol);
+	//MLX stuff
+	fractal->mlx_connection = mlx_init();
+	if (NULL == fractal->mlx_connection)
+		malloc_error();
+	fractal->mlx_window = mlx_new_window(fractal->mlx_connection,
+										WIDTH,
+										HEIGHT,
+										fractal->name);
+	if (NULL == fractal->mlx_window)
+	{
+		mlx_destroy_display(fractal->mlx_connection);
+		free(fractal->mlx_connection);
+		malloc_error();
+	}
+	fractal->img.img_ptr = mlx_new_image(fractal->mlx_connection,
+										WIDTH, HEIGHT);
+	if (NULL == fractal->img.img_ptr)
+	{
+		mlx_destroy_window(fractal->mlx_connection, fractal->mlx_window);
+		mlx_destroy_display(fractal->mlx_connection);
+		free(fractal->mlx_connection);
+		malloc_error();
+	}
+	fractal->img.pixels_ptr = mlx_get_data_addr(fractal->img.img_ptr,
+												&fractal->img.bpp,
+												&fractal->img.line_len,
+												&fractal->img.endian);
+	
+	data_init(fractal);
 }

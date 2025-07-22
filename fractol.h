@@ -1,30 +1,24 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   fractol.h                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: weiyang <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/22 08:52:33 by weiyang           #+#    #+#             */
-/*   Updated: 2025/07/22 08:52:37 by weiyang          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#ifndef  FRACTOL_H
+#ifndef FRACTOL_H
 # define FRACTOL_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <math.h>
-#include "minilibx-linux/mlx.h"
+# include <stdio.h> //TODO debugging
+# include <stdlib.h> //malloc free
+# include <unistd.h> // write
+# include <math.h>
+# include <X11/X.h>
+# include <X11/keysym.h>
+# include "minilibx-linux/mlx.h"
 
-//#define ERROR_MESSAGE "please enter \n\t\"./fractol mandelbrot\" or \n\t\"./fractol julia <value1> <value2>\"" 
 
 #define ERROR_MESSAGE "Please enter \n\t\"./fractol mandelbrot\" or \n\t\"./fractol julia <value_1> <value_2>\"\n"
-#define WIDTH   800
-#define HEIGHT  800
+
+/*
+ * We use a square to 
+ * keep the rendering math simple
+*/
+#define WIDTH	800
+#define	HEIGHT	800
+
 /*
  * COLORS
 */
@@ -45,39 +39,93 @@
 #define LAVA_RED        0xFF3300  // A bright, molten red
 
 
-typedef struct  s_complex
+
+
+
+/*
+ * COMPLEX value
+*/
+typedef struct	s_complex
 {
-    double  x;
-    double  y;
-}   t_complex;
+	//		real
+	double	x;
+	//		i
+	double	y;
+}				t_complex;
 
-typedef struct  s_img
+
+
+/*
+ * IMAGE
+ * This is basically a pixels buffer
+ * values from mlx_get_data_addr()
+*/
+typedef struct	s_img
 {
-    void    *img_ptr;
-    char    *pixels_ptr;
-    int     bpp;
-    int     endian;
-    int     line_len;
+	void	*img_ptr; //pointer to image struct
+	char	*pixels_ptr; //points to the actual pixels
+	int		bpp;
+	int		endian;
+	int		line_len;
+}				t_img;
 
-} t_img;
 
-typedef struct  s_fractol
+/*
+ * FRACTAL ID
+ * ~ MLX stuff
+ * ~ Image 
+ * ~ Hooks values
+*/
+typedef struct	s_fractal
 {
-    void    *mlx_connection;
-    void    *mlx_window;
-    t_img   img;
-    char    *name;
-    double  escaped_value;
-    int     iterations_definition;
+	char	*name;
+	//MLX
+	void	*mlx_connection; // mlx_init()
+	void	*mlx_window; 	 // mlx_new_window()
+	//Image
+	t_img	img;
 
-} t_fractol;
+	//Hooks member variables //TODO
+	double	escape_value; // hypotenuse
+	int		iterations_defintion; // value tight with the image quality and rendering speed
+	double	shift_x;
+	double	shift_y;
+	double	zoom;
+	double	julia_x;
+	double	julia_y;
+}				t_fractal;
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n);
-void	ft_putstr_fd(char *s, int fd);
-void    fractol_init(t_fractol *fractol);
-double  map(double unscaled_num, double new_min, double new_max, double old_min, double old_max);
+
+
+
+
+
+
+
+
+
+/*
+ * PROTOTYPES
+ * They are basically IOUs to the compiler
+*/
+//*** strings utils ***
+int	ft_strncmp(char *s1, char *s2, size_t n);
+void    ft_putstr_fd(char *s, int fd);
+
+
+//*** init ***
+void    fractal_init(t_fractal *fractal);
+
+//*** render ***
+void    fractal_render(t_fractal *fractal);
+
+//*** math ***
+double		map(double unscaled_num, double new_min, double new_max, double old_min, double old_max);
 t_complex   sum_complex(t_complex z1, t_complex z2);
 t_complex   square_complex(t_complex z);
-void    fractol_render(t_fractol *fractol);
 
-# endif
+//*** hooks_events ***
+
+
+
+#endif
