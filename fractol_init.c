@@ -12,6 +12,12 @@ static void	malloc_error(void)
 	exit(EXIT_FAILURE);
 }
 
+static void events_init(t_fractal *fractol)
+{
+    mlx_hook(fractol->mlx_window, KeyPress, KeyPressMask, key_handler, fractol);
+    mlx_hook(fractol->mlx_window, ButtonPress, ButtonPressMask, mouse_handler, fractol);
+    mlx_hook(fractol->mlx_window, DestroyNotify, StructureNotifyMask, close_handler, fractol);
+}
 
 
 static void	data_init(t_fractal *fractal)
@@ -62,6 +68,6 @@ void	fractal_init(t_fractal *fractal)
 												&fractal->img.bpp,
 												&fractal->img.line_len,
 												&fractal->img.endian);
-	
+	events_init(fractal);
 	data_init(fractal);
 }
