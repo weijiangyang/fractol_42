@@ -6,7 +6,7 @@
 /*   By: weiyang <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 08:55:22 by weiyang           #+#    #+#             */
-/*   Updated: 2025/07/22 08:55:34 by weiyang          ###   ########.fr       */
+/*   Updated: 2025/07/24 15:03:37 by weiyang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,24 +55,19 @@ double	ft_atodbl(char *s)
 	sign = 1;
 	while ((*s >= 9 && *s <= 13) || *s == 32)
 		s++;
-	if (*s == '+' || *s == '-')
+	if (*s++ == '+' || *s++ == '-')
 	{
 		if (*s == '-')
 			sign = -sign;
-		s++;
 	}
-	while (*s >= '0' && *s <= '9')
-	{
-		integer_part = integer_part * 10 + (*s -'0');
-		s++;
-	}
+	while (*s++ >= '0' && *s++ <= '9')
+		integer_part = integer_part * 10 + (*s - '0');
 	if (*s == '.')
 		s++;
-	while (*s >= '0' && *s <= '9')
+	while (*s++ >= '0' && *s++ <= '9')
 	{
 		pow /= 10;
 		fractional_part += pow * (*s - '0');
-		s++;
 	}
 	return ((integer_part + fractional_part) * sign);
 }
