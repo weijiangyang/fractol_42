@@ -1,33 +1,18 @@
-/*
- * PROJECT
- *
- * ~Julia and Mandelbrot
- * ~Infinite Zoom
- * ~Able to take command line args to disipline
- * 		which fractal render
- * ~Able to take command line args to shape Julia, i.e x y coordinates
- * ~ESC closes the process with no leaks
- * ~Click on the X window, closes the process leaks free
- *
- * * 🚨 Code has to be norminetted 🚨
- * 		~there are comments everywhere for clarity
- * 		~i go always on the next line to better see the function inputs
- * 		tldr->Don't git clone and push.
-
-*/
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: weiyang <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/24 14:54:00 by weiyang           #+#    #+#             */
+/*   Updated: 2025/07/24 14:54:02 by weiyang          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fractol.h"
 #include "minilibx-linux/mlx.h"
 
-/*
- * I HAVE 2 KINDA PROMPTS
- * 		~./fractol mandelbrot
- * 		~./fractol julia <real> <i>
- *
- * 	The main function is a TL,DR
- * 	of your application
- *
-*/
 int	main(int ac, char **av)
 {
 	t_fractal	fractal;

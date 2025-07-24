@@ -1,11 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fractol_init.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: weiyang <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/24 14:55:07 by weiyang           #+#    #+#             */
+/*   Updated: 2025/07/24 14:55:09 by weiyang          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 #include "minilibx-linux/mlx.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
- * If MALLOC goes bad (improbable)
-*/
 static void	malloc_error(void)
 {
 	perror("Problems with malloc");
@@ -20,29 +29,17 @@ static void events_init(t_fractal *fractol)
 	mlx_hook(fractol->mlx_window, MotionNotify, PointerMotionMask, julia_track, fractol);
 }
 
-
 static void	data_init(t_fractal *fractal)
 {
-	fractal->escape_value = 4; // 2 ^ 2, my hypotenuse
+	fractal->escape_value = 4;
 	fractal->iterations_defintion = 42; 
 	fractal->shift_x = 0.0;
 	fractal->shift_y = 0.0;
-	// zoom factor
 	fractal->zoom = 1.0;
 }
 
-
-
-
-/*
- * INIT 
- * ~mlx
- * ~listening events
- * ~hooks data
-*/
 void	fractal_init(t_fractal *fractal)
 {
-	//MLX stuff
 	fractal->mlx_connection = mlx_init();
 	if (NULL == fractal->mlx_connection)
 		malloc_error();
