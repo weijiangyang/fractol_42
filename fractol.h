@@ -38,9 +38,12 @@
 #define ELECTRIC_BLUE   0x0066FF  // A radiant blue
 #define LAVA_RED        0xFF3300  // A bright, molten red
 
-
-
-
+//Buttons
+#define Button1 1
+#define Button2 2
+#define Button3 3
+#define Button4 4
+#define Button5 5
 
 /*
  * COMPLEX value
@@ -125,7 +128,8 @@ t_complex   sum_complex(t_complex z1, t_complex z2);
 t_complex   square_complex(t_complex z);
 
 //*** hooks_events ***
-
-
+int key_handler(int keysym, t_fractal *fractal);
+int close_handler(int keysym, t_fractal *fractal);
+int mouse_handler(int button, int x, int y, t_fractal *fractal);
 
 #endif
