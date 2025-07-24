@@ -44,30 +44,42 @@ void	ft_putstr_fd(char *s, int fd)
 
 double	ft_atodbl(char *s)
 {
-	long	integer_part;
-	double	fractional_part;
-	int		sign;
-	double	pow;
+	double	result = 0.0;
+	double	frac = 0.0;
+	double	div = 10.0;
+	int		sign = 1;
 
-	integer_part = 0;
-	fractional_part = 0.0;
-	pow = 1.0;
-	sign = 1;
-	while ((*s >= 9 && *s <= 13) || *s == 32)
+	// Skip whitespaces
+	while ((*s >= 9 && *s <= 13) || *s == ' ')
 		s++;
-	if (*s++ == '+' || *s++ == '-')
+
+	// Sign
+	if (*s == '+' || *s == '-')
 	{
 		if (*s == '-')
-			sign = -sign;
-	}
-	while (*s++ >= '0' && *s++ <= '9')
-		integer_part = integer_part * 10 + (*s - '0');
-	if (*s == '.')
+			sign = -1;
 		s++;
-	while (*s++ >= '0' && *s++ <= '9')
-	{
-		pow /= 10;
-		fractional_part += pow * (*s - '0');
 	}
-	return ((integer_part + fractional_part) * sign);
+
+	// Integer part
+	while (*s >= '0' && *s <= '9')
+	{
+		result = result * 10.0 + (*s - '0');
+		s++;
+	}
+
+	// Fractional part
+	if (*s == '.')
+	{
+		s++;
+		while (*s >= '0' && *s <= '9')
+		{
+			frac += (*s - '0') / div;
+			div *= 10.0;
+			s++;
+		}
+	}
+
+	return sign * (result + frac);
 }
+
