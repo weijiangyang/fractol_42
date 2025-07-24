@@ -41,3 +41,38 @@ void	ft_putstr_fd(char *s, int fd)
 		s++;
 	}
 }
+
+double	ft_atodbl(char *s)
+{
+	long	integer_part;
+	double	fractional_part;
+	int		sign;
+	double	pow;
+
+	integer_part = 0;
+	fractional_part = 0.0;
+	pow = 1.0;
+	sign = 1;
+	while ((*s >= 9 && *s <= 13) || *s == 32)
+		s++;
+	if (*s == '+' || *s == '-')
+	{
+		if (*s == '-')
+			sign = -sign;
+		s++;
+	}
+	while (*s >= '0' && *s <= '9')
+	{
+		integer_part = integer_part * 10 + (*s -'0');
+		s++;
+	}
+	if (*s == '.')
+		s++;
+	while (*s >= '0' && *s <= '9')
+	{
+		pow /= 10;
+		fractional_part += pow * (*s - '0');
+		s++;
+	}
+	return ((integer_part + fractional_part) * sign);
+}

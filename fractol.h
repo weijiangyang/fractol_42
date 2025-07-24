@@ -114,7 +114,7 @@ typedef struct	s_fractal
 //*** strings utils ***
 int	ft_strncmp(char *s1, char *s2, size_t n);
 void    ft_putstr_fd(char *s, int fd);
-
+double	ft_atodbl(char *s);
 
 //*** init ***
 void    fractal_init(t_fractal *fractal);

@@ -32,19 +32,20 @@ int	main(int ac, char **av)
 {
 	t_fractal	fractal;
 
-
-	if ((2 == ac && !ft_strncmp(av[1], "mandelbrot", 10))
-		|| (4 == ac && !ft_strncmp(av[1], "julia", 5)))
+	if (ac == 2 && !ft_strncmp(av[1], "mandelbrot", 10))
 	{
 		fractal.name = av[1];
-		
-		//TL;DR
-		//Prompt correct, kick off the application
-		//1)
 		fractal_init(&fractal);
-		//2)
 		fractal_render(&fractal);
-		//3)
+		mlx_loop(fractal.mlx_connection);
+	}
+	else if (ac == 4 && !ft_strncmp(av[1], "julia", 5))
+	{
+		fractal.name = av[1];
+		fractal.julia_x = ft_atodbl(av[2]);
+		fractal.julia_y = ft_atodbl(av[3]);
+		fractal_init(&fractal);
+		fractal_render(&fractal);
 		mlx_loop(fractal.mlx_connection);
 	}
 	else
