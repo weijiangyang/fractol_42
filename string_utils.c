@@ -6,7 +6,7 @@
 /*   By: weiyang <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 08:55:22 by weiyang           #+#    #+#             */
-/*   Updated: 2025/07/24 15:03:37 by weiyang          ###   ########.fr       */
+/*   Updated: 2025/07/25 11:43:06 by weiyang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,44 +42,45 @@ void	ft_putstr_fd(char *s, int fd)
 	}
 }
 
+double	ft_atodbl_1(char *s)
+{
+	double	div;
+	double	frac;
+
+	div = 10.0;
+	frac = 0.0;
+	while (*s >= '0' && *s <= '9')
+	{
+		frac += (*s - '0') / div;
+		div *= 10.0;
+		s++;
+	}
+	return (frac);
+}
+
 double	ft_atodbl(char *s)
 {
-	double	result = 0.0;
-	double	frac = 0.0;
-	double	div = 10.0;
-	int		sign = 1;
+	double	result;
+	double	frac;
+	int		sign;
 
-	// Skip whitespaces
+	result = 0.0;
+	frac = 0.0;
+	sign = 1;
 	while ((*s >= 9 && *s <= 13) || *s == ' ')
 		s++;
-
-	// Sign
 	if (*s == '+' || *s == '-')
 	{
 		if (*s == '-')
 			sign = -1;
 		s++;
 	}
-
-	// Integer part
 	while (*s >= '0' && *s <= '9')
 	{
 		result = result * 10.0 + (*s - '0');
 		s++;
 	}
-
-	// Fractional part
-	if (*s == '.')
-	{
-		s++;
-		while (*s >= '0' && *s <= '9')
-		{
-			frac += (*s - '0') / div;
-			div *= 10.0;
-			s++;
-		}
-	}
-
-	return sign * (result + frac);
+	if (*s++ == '.')
+		frac += ft_atodbl_1(s);
+	return (sign * (result + frac));
 }
-

@@ -6,7 +6,7 @@
 /*   By: weiyang <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 14:59:19 by weiyang           #+#    #+#             */
-/*   Updated: 2025/07/24 14:59:20 by weiyang          ###   ########.fr       */
+/*   Updated: 2025/07/25 13:58:40 by weiyang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,19 @@ static void	handle_pixel(int x, int y, t_fractal *fractal)
 {
 	t_complex	z;
 	t_complex	c;
+
+	
+	t_scale		scale_color;
+
 	int			i;
 	int			color;
 
+	scale_color.new_min = BLACK;
+	scale_color.new_max = WHITE;
+	scale_color.old_min = 0;
 	i = 0;
-	z.x = (map(x, -2, +2, 0, WIDTH) * fractal->zoom) + fractal->shift_x;
-	z.y = (map(y, -2, +2, 0, HEIGHT) * fractal->zoom) + fractal->shift_y;
+	z.x = (map(x, fractal->scale_x) * fractal->zoom) + fractal->shift_x;
+	z.y = (map(y, fractal->scale_y) * fractal->zoom) + fractal->shift_y;
 	
 	mandel_vs_julia(&z, &c, fractal);
 	while (i < fractal->iterations_defintion)
@@ -57,7 +64,8 @@ static void	handle_pixel(int x, int y, t_fractal *fractal)
 		z = sum_complex(square_complex(z), c);
 		if ((z.x * z.x) + (z.y * z.y) > fractal->escape_value)
 		{
-			color = map(i, BLACK, WHITE, 0, fractal->iterations_defintion);
+			scale_color.old_max = fractal->iterations_defintion;
+			color = map(i, scale_color);
 			my_pixel_put(x, y, &fractal->img, color);
 			return ;
 		}

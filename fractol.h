@@ -6,7 +6,7 @@
 /*   By: weiyang <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 14:57:23 by weiyang           #+#    #+#             */
-/*   Updated: 2025/07/24 14:57:24 by weiyang          ###   ########.fr       */
+/*   Updated: 2025/07/25 14:00:00 by weiyang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,14 @@ typedef struct	s_complex
 	double	y;
 }				t_complex;
 
+typedef	struct	s_scale
+{
+	double	new_min;
+	double	new_max;
+	double	old_min;
+	double	old_max;
+}	t_scale;
+
 typedef struct	s_img
 {
 	void	*img_ptr; //pointer to image struct
@@ -74,6 +82,8 @@ typedef struct	s_fractal
 	double	zoom;
 	double	julia_x;
 	double	julia_y;
+	t_scale	scale_x;
+	t_scale	scale_y;
 }				t_fractal;
 
 int	ft_strcmp(char *s1, char *s2);
@@ -82,7 +92,7 @@ void    ft_putstr_fd(char *s, int fd);
 double	ft_atodbl(char *s);
 void    fractal_init(t_fractal *fractal);
 int   fractal_render(t_fractal *fractal);
-double		map(double unscaled_num, double new_min, double new_max, double old_min, double old_max);
+double	map(double unscaled_num, t_scale scale);
 t_complex   sum_complex(t_complex z1, t_complex z2);
 t_complex   square_complex(t_complex z);
 int key_handler(int keysym, t_fractal *fractal);

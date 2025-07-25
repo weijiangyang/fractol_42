@@ -6,7 +6,7 @@
 /*   By: weiyang <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 14:55:07 by weiyang           #+#    #+#             */
-/*   Updated: 2025/07/24 14:55:09 by weiyang          ###   ########.fr       */
+/*   Updated: 2025/07/25 14:01:15 by weiyang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,14 @@ static void	data_init(t_fractal *fractal)
 	fractal->shift_x = 0.0;
 	fractal->shift_y = 0.0;
 	fractal->zoom = 1.0;
+	fractal->scale_x.new_min = -2;
+	fractal->scale_x.new_max = 2;
+	fractal->scale_x.old_min = 0;
+	fractal->scale_x.old_max = WIDTH;
+	fractal->scale_y.new_min = -2;
+	fractal->scale_y.new_max = 2;
+	fractal->scale_y.old_min = 0;
+	fractal->scale_y.old_max = HEIGHT;
 }
 
 void	fractal_init(t_fractal *fractal)
