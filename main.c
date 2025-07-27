@@ -6,7 +6,7 @@
 /*   By: weiyang <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 14:54:00 by weiyang           #+#    #+#             */
-/*   Updated: 2025/07/24 14:54:02 by weiyang          ###   ########.fr       */
+/*   Updated: 2025/07/27 11:48:00 by weiyang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	main(int ac, char **av)
 {
 	t_fractal	fractal;
 
-	if (ac == 2 && (!ft_strncmp(av[1], "mandelbrot", 10) || !ft_strncmp(av[1], "burning_ship", 12)))
+	if (ac == 2 && (!ft_strncmp(av[1], "mandelbrot", 10)
+			|| !ft_strncmp(av[1], "burning_ship", 12)))
 	{
 		fractal.name = av[1];
 		fractal_init(&fractal);
