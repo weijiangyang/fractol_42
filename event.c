@@ -50,9 +50,9 @@ int	mouse_handler(int button, int x, int y, t_fractal *fractal)
 	double	mouse_y;
 
 	prev_zoom = fractal->zoom;
-	if (button == Button4)
+	if (button == BUTTON4)
 		zoom_factor = 1.05;
-	else if (button == Button5)
+	else if (button == BUTTON5)
 		zoom_factor = 0.95;
 	else
 		return (0);
